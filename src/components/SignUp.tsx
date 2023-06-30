@@ -26,10 +26,11 @@ const SignUp = ( {}: Props ) => {
     const [visible, { toggle }] = useDisclosure(false);
     const [hasError, setHasError] = useState(false);
     const [error, setError] = useState('');
+    const [hasDone, setHasDone] = useState(false);
 
     const onSubmit = (values: {username: string, password: string}) => {
         SignUpAction( values.username, values.password, (res) => {
-            console.log(res);
+            setHasDone(true)
         }, (e) => {
             setHasError(true)
             setError(e?.message)
@@ -39,6 +40,9 @@ const SignUp = ( {}: Props ) => {
         <Box>
             {hasError && <Alert mb={10} title="Error!" color="red">
                 {error}
+            </Alert>}
+            {hasDone && <Alert mb={10} title="Congratulations!" color="green">
+                Register successful you can log in
             </Alert>}
             <form onSubmit={form.onSubmit((values) => onSubmit({
                 username: values.username, password: values.password
